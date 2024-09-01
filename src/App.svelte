@@ -99,7 +99,7 @@
                     <hr>
                     <div class="notes">
                     {#each notes as note}
-                        <button class="btn btn-outline-secondary btn-sm rounded-0">{note}</button>
+                        <button class="btn btn-outline-secondary btn-sm rounded-0" class:active={randomNote === note}>{note}</button>
                     {/each} 
                     </div>
                 </div>
