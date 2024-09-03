@@ -5,95 +5,94 @@
     // Random Note Generator
     const notes = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B'];
     let randomNote = '';
-  
+    
     function generateRandomNote() {
-      const randomIndex = Math.floor(Math.random() * notes.length);
-      randomNote = notes[randomIndex];
+        const randomIndex = Math.floor(Math.random() * notes.length);
+        randomNote = notes[randomIndex];
+        console.log(randomNote);
     }
-  
+
     generateRandomNote();
     // Metronome
     let bpm = 60;  // Beats per minute
     let intervalId = null;
     let isPlaying = false;
     let audioContext = null;
-  
+
     function createClickSound() {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-  
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-  
-      oscillator.type = 'sine';
-      oscillator.frequency.value = 100;
-      oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
-      gainNode.gain.setValueAtTime(1, audioContext.currentTime);
-  
-      oscillator.start();
-      oscillator.stop(audioContext.currentTime + 0.1);
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+    
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+    
+        oscillator.type = 'sine';
+        oscillator.frequency.value = 100;
+        oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(1, audioContext.currentTime);
+    
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.1);
     }
-  
+
     function startMetronome() {
-      if (isPlaying) return;
-      isPlaying = true;
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      intervalId = setInterval(() => {
-        createClickSound();
-      }, (60 / bpm) * 1000);
+        if (isPlaying) return;
+        isPlaying = true;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        intervalId = setInterval(() => {
+            createClickSound();
+        }, (60 / bpm) * 1000);
     }
-  
+
     function stopMetronome() {
-      clearInterval(intervalId);
-      isPlaying = false;
-      if (audioContext) {
-        audioContext.close();
-        audioContext = null;
-      }
+        clearInterval(intervalId);
+        isPlaying = false;
+        if (audioContext) {
+            audioContext.close();
+            audioContext = null;
+        }
     }
-  
+
     function toggleMetronome() {
-      if (isPlaying) {
-        stopMetronome();
-      } else {
-        startMetronome();
-      }
+        if (isPlaying) {
+            stopMetronome();
+        } else {
+            startMetronome();
+        }
     }
-  
+
     function increaseBPM() {
-      bpm++;
-      if (isPlaying) {
-        stopMetronome();
-        startMetronome();
-      }
+        bpm++;
+        if (isPlaying) {
+            stopMetronome();
+            startMetronome();
+        }
     }
-  
+
     function decreaseBPM() {
-      bpm--;
-      if (isPlaying) {
-        stopMetronome();
-        startMetronome();
-      }
+        bpm--;
+        if (isPlaying) {
+            stopMetronome();
+            startMetronome();
+        }
     }
 
     function jumpBPM(jump) {
-      bpm = jump;
-      if (isPlaying) {
-        stopMetronome();
-        startMetronome();
-      }
+        bpm = jump;
+        if (isPlaying) {
+            stopMetronome();
+            startMetronome();
+        }
     }
-  </script>
-  
+</script>
 
-  
 <div class="container">
     <h1>Musicians Tools</h1>
     <div class="row">
         <div class="col-6 note-generator">
             <div class="card h-100">
                 <div class="card-body">
-                    <h2>Scale</h2>
+                    <h2>Random Scale/Note</h2>
                     <h3>{randomNote}</h3>
                     <button class="btn btn-success rounded-0" on:click={generateRandomNote}>Random</button>
                     <hr>
@@ -128,33 +127,28 @@
     </div>
 </div>
 
-  <style>
+<style>
     .note-generator button {
         margin:10px 0; 
     }
-  
     .bpm-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
     }
-  
     .bpm-controls button {
-      margin: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    h1 {
-        font-size:1em;
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
     }
     h2 {
         font-size:1.2em;
     }
     h2, h3 {
-      margin: 0;
-      padding: 10px;
+        margin: 0;
+        padding: 10px;
     }
     .note-generator h3 {
         border:1px solid #cccccc;
@@ -163,6 +157,9 @@
         font-size:.5em;
     }
     .notes button {
-        margin-right:3px;
+        border:0;
     }
-  </style>
+    .notes {
+        border:1px solid #ccc;
+    }
+</style>
